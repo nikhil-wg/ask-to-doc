@@ -2,6 +2,7 @@ import Image from "next/image";
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Layout, Shield } from "lucide-react";
+import { Progress } from "@/components/ui/progress";
 
 function SideBar() {
   return (
@@ -17,7 +18,10 @@ function SideBar() {
           <Shield/>
           <h2>Upgrade</h2>
         </div>
-
+        <div className="">
+          <Progress value={33}/>
+          <p className="text-sm"> 2 out of 5 Pdf Uploaded</p>
+        </div>
       </div>
     </div>
   );
