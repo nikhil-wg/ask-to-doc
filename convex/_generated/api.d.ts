@@ -13,7 +13,7 @@ import type {
   FilterApi,
   FunctionReference,
 } from "convex/server";
-import type * as Storage from "../Storage.js";
+import type * as Storage from "../fileStorage.js";
 import type * as user from "../user.js";
 
 /**
