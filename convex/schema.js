@@ -8,4 +8,10 @@ export default defineSchema({
     email: v.string(),
     imgURL: v.string(),
   }),
+  pdfFiles: defineSchema({
+    fileId: v.string(),
+    storageId: v.string(),
+    fileName: v.string(),
+    userEmail: v.string(),
+  }),
 });
