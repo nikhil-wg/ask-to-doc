@@ -15,15 +15,21 @@ import { Input } from "@/components/ui/input";
 import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { Loader2Icon } from "lucide-react";
+import uuid4 from "iuuid4";
+import { useUser } from "@clerk/nextjs";
 function UploadPdfDialog({ children }) {
   const [file, setFile] = useState();
   const [loading, setLoading] = useState(false);
+  const {user} = useUser()
   const generateUploadUrl = useMutation(api.fileStorage.generateUploadUrl);
+  const addFileEntry = useMutation(api.fileStorage.AddFileEnteryToDb);
   const onFileSelect = (event) => {
     setFile(event.target.files[0]);
   };
   const onUpload = async () => {
     setLoading(true);
+    // Step 1: Get a short-lived upload URL
+
     const postUrl = await generateUploadUrl();
     // Step 2: POST the file to the URL
     const result = await fetch(postUrl, {
@@ -33,6 +39,8 @@ function UploadPdfDialog({ children }) {
     });
     const { storageId } = await result.json();
     console.log("Storage:", storageId);
+    // Step 3: Save the newly allocated storage id to the database
+    const fileId = uuid4();
     setLoading(false);
   };
   return (
