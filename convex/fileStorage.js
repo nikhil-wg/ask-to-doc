@@ -12,6 +12,7 @@ export const AddFileEnteryToDb = mutation({
     fileId: v.string(),
     storageId: v.string(),
     fileName: v.string(),
+    fileUrl:v.string(),
     createdBy: v.string(),
   },
   handler: async (ctx, args) => {
@@ -19,9 +20,20 @@ export const AddFileEnteryToDb = mutation({
       fileId: args.fileId,
       storageId: args.storageId,
       fileName: args.fileName,
+      fileUrl:args.fileUrl,
       createdBy: args.createdBy,
     });
     console.log("inserted pdfdata");
     return "Inserted";
+  },
+});
+
+export const getFileUrl = mutation({
+  args: {
+    storageId: v.string(),
+  },
+  handler: async (ctx, args) => {
+    const url = await ctx.storage.getUrl(args.storageId);
+    return url;
   },
 });

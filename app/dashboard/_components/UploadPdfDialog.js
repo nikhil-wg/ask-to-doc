@@ -20,15 +20,17 @@ import { useUser } from "@clerk/nextjs";
 function UploadPdfDialog({ children }) {
   const [file, setFile] = useState();
   const [loading, setLoading] = useState(false);
-  const {user} = useUser()
+  const [fileName, setFileName] = useState();
+  const { user } = useUser();
   const generateUploadUrl = useMutation(api.fileStorage.generateUploadUrl);
   const addFileEntry = useMutation(api.fileStorage.AddFileEnteryToDb);
+  const getFileUrl = useMutation(api.fileStorage.getFileUrl);
   const onFileSelect = (event) => {
     setFile(event.target.files[0]);
   };
   const onUpload = async () => {
     setLoading(true);
-    // Step 1: Get a short-lived upload 
+    // Step 1: Get a short-lived upload
 
     const postUrl = await generateUploadUrl();
     // Step 2: POST the file to the URL
@@ -40,10 +42,19 @@ function UploadPdfDialog({ children }) {
     const { storageId } = await result.json();
     console.log("Storage:", storageId);
     // Step 3: Save the newly allocated storage id to the database
-    const fileId = uuid4(
+    const fileId = uuid4();
+    const fileUrl = await getFileUrl({ storageId: storageId });
+    const resp = await addFileEntry({
+      fileId: fileId,
+      storageId: storageId,
+      fileName: fileName,
+      fileUrl: fileUrl,
+      createdBy: user?.primaryEmailAddress.emailAddress,
+    });
+    console.log(resp);
     setLoading(false);
   };
-  
+
   return (
     <div>
       <Dialog>
@@ -71,7 +82,7 @@ function UploadPdfDialog({ children }) {
                   <Input
                     placeholder="File Name"
                     className="text-black"
-                    onChange={(event) => onFileSelect(event)}
+                    onChange={(e) => setFileName(e.target.value)}
                   />
                 </div>
               </div>
