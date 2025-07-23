@@ -17,6 +17,8 @@ import { api } from "@/convex/_generated/api";
 import { Loader2Icon } from "lucide-react";
 import uuid4 from "uuid4";
 import { useUser } from "@clerk/nextjs";
+import axios from "axios";
+
 function UploadPdfDialog({ children }) {
   const [file, setFile] = useState();
   const [loading, setLoading] = useState(false);
@@ -52,6 +54,8 @@ function UploadPdfDialog({ children }) {
       createdBy: user?.primaryEmailAddress.emailAddress,
     });
     console.log(resp);
+    const ApiResp= await axios.get("/api/pdf-loader")
+    console.log(ApiResp.data.result)
     setLoading(false);
   };
 
