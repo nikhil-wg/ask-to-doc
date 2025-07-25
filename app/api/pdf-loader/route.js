@@ -2,10 +2,14 @@ import { NextResponse } from "next/server";
 import { WebPDFLoader } from "@langchain/community/document_loaders/web/pdf";
 import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
 import { Document } from "langchain/document";
-const fileUrl =
-  "https://first-chinchilla-293.convex.cloud/api/storage/681209ec-2bab-493d-988c-c4aa2a1aa969";
+import { URL } from "next/dist/compiled/@edge-runtime/primitives/url";
+// const fileUrl = "https://first-chinchilla-293.convex.cloud/api/storage/681209ec-2bab-493d-988c-c4aa2a1aa969";
 
 export async function GET(req) {
+const reqUrl=req.url;
+const {searchparams}= new URL(reqUrl)
+const pdfUrl= searchparams.GET("pdfUrl")
+console
   //1. Load the file
   const response = await fetch(fileUrl);
   const data = await response.blob();

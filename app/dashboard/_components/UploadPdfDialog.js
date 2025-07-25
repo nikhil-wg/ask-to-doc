@@ -12,7 +12,7 @@ import {
 import { DialogClose } from "@radix-ui/react-dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useMutation } from "convex/react";
+import { useAction, useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { Loader2Icon } from "lucide-react";
 import uuid4 from "uuid4";
@@ -27,13 +27,14 @@ function UploadPdfDialog({ children }) {
   const generateUploadUrl = useMutation(api.fileStorage.generateUploadUrl);
   const addFileEntry = useMutation(api.fileStorage.AddFileEnteryToDb);
   const getFileUrl = useMutation(api.fileStorage.getFileUrl);
+  const embeddDocument = useAction(api.myAction.ingest);
   const onFileSelect = (event) => {
     setFile(event.target.files[0]);
   };
   const onUpload = async () => {
     setLoading(true);
-    // Step 1: Get a short-lived upload
 
+    // Step 1: Get a short-lived upload
     const postUrl = await generateUploadUrl();
     // Step 2: POST the file to the URL
     const result = await fetch(postUrl, {
@@ -54,8 +55,15 @@ function UploadPdfDialog({ children }) {
       createdBy: user?.primaryEmailAddress.emailAddress,
     });
     console.log(resp);
-    const ApiResp= await axios.get("/api/pdf-loader")
-    console.log(ApiResp.data.result)
+
+    //api call
+    const ApiResp = await axios.get("/api/pdf-loader=pdUrl="+fileUrl);
+    console.log(ApiResp.data.result);
+    // embeddDocument({
+    //   splitText:ApiResp.data.result,
+    //   fileId:"123"
+    // });
+    // console.log(embeddDocument)
     setLoading(false);
   };
 
