@@ -10,7 +10,7 @@ function SideBar() {
     <div className="shadow-lg h-screen p-7">
       <Image
         className="w-full"
-        src={"/ask-to-doc.png"}
+        src={"/logo.png"}
         alt="logo"
         width={170}
         height={120}

@@ -23,11 +23,13 @@ function UploadPdfDialog({ children }) {
   const [file, setFile] = useState();
   const [loading, setLoading] = useState(false);
   const [fileName, setFileName] = useState();
+  const [open, setOpen] = useState(false);
   const { user } = useUser();
   const generateUploadUrl = useMutation(api.fileStorage.generateUploadUrl);
   const addFileEntry = useMutation(api.fileStorage.AddFileEnteryToDb);
   const getFileUrl = useMutation(api.fileStorage.getFileUrl);
   const embeddDocument = useAction(api.myAction.ingest);
+
   const onFileSelect = (event) => {
     setFile(event.target.files[0]);
   };
@@ -54,23 +56,35 @@ function UploadPdfDialog({ children }) {
       fileUrl: fileUrl,
       createdBy: user?.primaryEmailAddress.emailAddress,
     });
+
     console.log(resp);
 
     //api call
-    const ApiResp = await axios.get("/api/pdf-loader=pdUrl="+fileUrl);
+    console.log(fileUrl);
+    const ApiResp = await axios.get("/api/pdf-loader?pdfUrl=" + fileUrl);
     console.log(ApiResp.data.result);
-    // embeddDocument({
-    //   splitText:ApiResp.data.result,
-    //   fileId:"123"
-    // });
-    // console.log(embeddDocument)
+    await embeddDocument({
+      splitText: ApiResp.data.result,
+      fileId: fileId,
+    });
+    console.log("created vectordb");
     setLoading(false);
+    setOpen(false);
   };
 
   return (
     <div>
-      <Dialog>
-        <DialogTrigger asChild>{children}</DialogTrigger>
+      <Dialog open={open}>
+        <DialogTrigger asChild>
+          <Button
+            onClick={() => {
+              setOpen(true);
+            }} className="w-full"
+          >
+            {" "}
+            + Upload PDF File
+          </Button>
+        </DialogTrigger>
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Upload Pdf File</DialogTitle>
@@ -103,11 +117,18 @@ function UploadPdfDialog({ children }) {
 
           <DialogFooter className="sm:justify-end">
             <DialogClose asChild>
-              <Button type="button" variant="secondary" className="ml-1">
+              <Button
+                type="button"
+                variant="secondary"
+                className="ml-1"
+                onClick={() => {
+                  setOpen(false);
+                }}
+              >
                 Close
               </Button>
             </DialogClose>
-            <Button onClick={onUpload}>
+            <Button onClick={onUpload} disabled={loading }>
               {loading ? <Loader2Icon className="animate-spin" /> : "Upload"}
             </Button>
           </DialogFooter>
