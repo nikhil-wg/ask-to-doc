@@ -3,14 +3,16 @@ import { GoogleGenerativeAIEmbeddings } from "@langchain/google-genai";
 import { TaskType } from "@google/generative-ai";
 import { action } from "./_generated/server.js";
 import { v } from "convex/values";
-import { stringify } from "querystring";
 
 export const ingest = action({
   args: {
-    splitText: v.any(), // array
-    fileId: v.string(), // string
+    splitText: v.any(), // Array of text chunks
+    fileId: v.string(), // File identifier
   },
   handler: async (ctx, args) => {
+    console.log("✅ ENV in Convex:", process.env);
+    console.log("✅ ENV in Convex:", process.env.GOOGLE_GEMINI_AI_API_KEY);
+
     const apiKey = process.env.GOOGLE_GEMINI_AI_API_KEY;
 
     if (!apiKey) {
@@ -48,7 +50,8 @@ export const search = action({
         "Missing GOOGLE_GEMINI_AI_API_KEY in environment variables"
       );
     }
-    const vectorStore = new ConvexVectorStore.fromTexts(
+
+    const vectorStore = new ConvexVectorStore(
       new GoogleGenerativeAIEmbeddings({
         apiKey,
         model: "text-embedding-004",
@@ -58,8 +61,11 @@ export const search = action({
       { ctx }
     );
 
-    const resultOne = (await vectorStore.similaritySearch(args.query, 1)).filter(q=>q.metadaata.fileId==args.fileId);
-    console.log(resultOne);
-    return JSON.stringify(resultOne)
+    const results = await vectorStore.similaritySearch(args.query, 3);
+    const filteredResults = results.filter(
+      (r) => r.metadata?.fileId === args.fileId
+    );
+
+    return JSON.stringify(filteredResults);
   },
 });

@@ -18,13 +18,15 @@ export default function Home() {
       imgURL: user?.imageUrl,
       userName: user?.fullName,
     });
-    console.log(result)
+    console.log(result);
   };
-
+  
   return (
     <div className="p-10">
       adfsdas
-      <Button>theasdfdf</Button>
+      <Button >
+        theasdfdf
+      </Button>
       <UserButton />
     </div>
   );
