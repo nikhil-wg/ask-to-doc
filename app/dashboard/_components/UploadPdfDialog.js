@@ -18,8 +18,9 @@ import { Loader2Icon } from "lucide-react";
 import uuid4 from "uuid4";
 import { useUser } from "@clerk/nextjs";
 import axios from "axios";
+import { toast } from "sonner";
 
-function UploadPdfDialog({ children }) {
+function UploadPdfDialog({ children, isMaxFile }) {
   const [file, setFile] = useState();
   const [loading, setLoading] = useState(false);
   const [fileName, setFileName] = useState();
@@ -35,6 +36,7 @@ function UploadPdfDialog({ children }) {
   };
   const onUpload = async () => {
     setLoading(true);
+    toast("PDF is uploading please wait..");
 
     // Step 1: Get a short-lived upload
     const postUrl = await generateUploadUrl();
@@ -68,6 +70,7 @@ function UploadPdfDialog({ children }) {
       fileId: fileId,
     });
     console.log("created vectordb");
+    toast("PDF is ready.");
     setLoading(false);
     setOpen(false);
   };
@@ -79,7 +82,9 @@ function UploadPdfDialog({ children }) {
           <Button
             onClick={() => {
               setOpen(true);
-            }} className="w-full"
+            }}
+            className="w-full"
+            disabled={isMaxFile}
           >
             {" "}
             + Upload PDF File
@@ -128,7 +133,7 @@ function UploadPdfDialog({ children }) {
                 Close
               </Button>
             </DialogClose>
-            <Button onClick={onUpload} disabled={loading }>
+            <Button onClick={onUpload} disabled={loading}>
               {loading ? <Loader2Icon className="animate-spin" /> : "Upload"}
             </Button>
           </DialogFooter>

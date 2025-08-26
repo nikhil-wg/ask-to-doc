@@ -17,14 +17,15 @@ function Workspace() {
   }, [fileInfo]);
   return (
     <div>
-      <WorkspaceHeader />
+      <WorkspaceHeader fileName={fileInfo?.fileName} />
       <div className="grid grid-cols-2 gap-5">
-        <div>{/* text editer */}
-          <TextEditer/>
+        <div>
+          {/* text editer */}
+          <TextEditer fileId={fileInfo?.fileId} />
         </div>
         <div>
           {/* pdf viewer*/}
-          <PdfViewer fileUrl={fileInfo?.fileUrl}/>
+          <PdfViewer fileUrl={fileInfo?.fileUrl} />
         </div>
       </div>
     </div>

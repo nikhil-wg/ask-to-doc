@@ -1,11 +1,23 @@
+"use client";
+import { api } from "@/convex/_generated/api";
+import { useUser } from "@clerk/nextjs";
+import { useQuery } from "convex/react";
 import Image from "next/image";
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Layout, Shield } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 import UploadPdfDialog from "./UploadPdfDialog";
+import { usePathname } from "next/navigation";
+import Link from "next/link";
 
 function SideBar() {
+  const { user } = useUser();
+  const path = usePathname();
+  const fileList = useQuery(api.fileStorage.GetUserFiles, {
+    userEmail: user?.primaryEmailAddress?.emailAddress,
+  });
+  console.log("file list:", fileList);
   return (
     <div className="shadow-lg h-screen p-7">
       <Image
@@ -16,21 +28,31 @@ function SideBar() {
         height={120}
       />
       <div className="mt-10">
-        <UploadPdfDialog>
+        <UploadPdfDialog isMaxFile={fileList?.length >= 5 ? true : false}>
           <Button className="w-full">+ Upload PDF</Button>
         </UploadPdfDialog>
-
-        <div className=" flex gap-2 items-center p-3 mt-5 hover:bg-slate-100 rounded-lg cursor-pointer">
-          <Layout />
-          <h2>Work Space</h2>
-        </div>
-        <div className=" flex gap-2 items-center p-3 mt-2 hover:bg-slate-100 rounded-lg cursor-pointer">
-          <Shield />
-          <h2>Upgrade</h2>
-        </div>
+        <Link href={"/dashboard"}>
+          <div
+            className={` flex gap-2 items-center p-3 mt-5 hover:bg-slate-100 rounded-lg cursor-pointer ${path == "/dashboard" && "bg-slate-200"}`}
+          >
+            <Layout />
+            <h2>Work Space</h2>
+          </div>
+        </Link>
+        <Link href={"/dashboard/upgrade"}>
+          <div
+            className={`flex gap-2 items-center p-3 mt-2 hover:bg-slate-100 rounded-lg cursor-pointer  ${path == "/dashboard/upgrade" && "bg-slate-200"}`}
+          >
+            <Shield />
+            <h2>Upgrade</h2>
+          </div>
+        </Link>
         <div className="absolute bottom-24 w-[80%]">
-          <Progress value={33} />
-          <p className="text-sm mt-1"> 2 out of 5 Pdf Uploaded</p>
+          <Progress value={(fileList?.length / 5) * 100} />
+          <p className="text-sm mt-1">
+            {" "}
+            {fileList?.length} out of 5 Pdf Uploaded
+          </p>
           <p className="text-xs text-gray-400 mt-2">
             {" "}
             Upgrade to upload more PDF

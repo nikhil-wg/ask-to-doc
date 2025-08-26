@@ -4,26 +4,25 @@ import { TaskType } from "@google/generative-ai";
 import { action } from "./_generated/server.js";
 import { v } from "convex/values";
 
+const apiKey = process.env.GOOGLE_GEMINI_AI_API_KEY;
+
+if (!apiKey) {
+  throw new Error(
+    "❌ Missing GOOGLE_GEMINI_AI_API_KEY in environment variables."
+  );
+}
+
 export const ingest = action({
   args: {
-    splitText: v.any(), // Array of text chunks
-    fileId: v.string(), // File identifier
+    splitText: v.any(),
+    fileId: v.string(),
   },
   handler: async (ctx, args) => {
-    console.log("✅ ENV in Convex:", process.env);
-    console.log("✅ ENV in Convex:", process.env.GOOGLE_GEMINI_AI_API_KEY);
-
-    const apiKey = process.env.GOOGLE_GEMINI_AI_API_KEY;
-
-    if (!apiKey) {
-      throw new Error(
-        "Missing GOOGLE_GEMINI_AI_API_KEY in environment variables"
-      );
-    }
+    console.log("✅ Ingesting data...");
 
     await ConvexVectorStore.fromTexts(
       args.splitText,
-      args.fileId,
+      { fileId: args.fileId },
       new GoogleGenerativeAIEmbeddings({
         apiKey,
         model: "text-embedding-004",
@@ -33,7 +32,7 @@ export const ingest = action({
       { ctx }
     );
 
-    return "completed";
+    return "✅ Ingestion completed";
   },
 });
 
@@ -43,13 +42,9 @@ export const search = action({
     fileId: v.string(),
   },
   handler: async (ctx, args) => {
-    const apiKey = process.env.GOOGLE_GEMINI_AI_API_KEY;
-
-    if (!apiKey) {
-      throw new Error(
-        "Missing GOOGLE_GEMINI_AI_API_KEY in environment variables"
-      );
-    }
+    console.log("🔍 Performing vector search...");
+    console.log("Query:", args.query);
+    console.log("FileId filter:", args.fileId);
 
     const vectorStore = new ConvexVectorStore(
       new GoogleGenerativeAIEmbeddings({
@@ -61,11 +56,16 @@ export const search = action({
       { ctx }
     );
 
-    const results = await vectorStore.similaritySearch(args.query, 3);
-    const filteredResults = results.filter(
+    // Run similarity search
+    const searchResults = await vectorStore.similaritySearch(args.query, 5);
+
+    // Filter only if metadata.fileId exists
+    const results = searchResults.filter(
       (r) => r.metadata?.fileId === args.fileId
     );
 
-    return JSON.stringify(filteredResults);
+    console.log("Filtered vector search result:", results);
+
+    return JSON.stringify(results);
   },
 });
