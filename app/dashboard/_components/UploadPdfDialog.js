@@ -37,7 +37,8 @@ function UploadPdfDialog({ children, isMaxFile }) {
   const onUpload = async () => {
     setLoading(true);
     toast("PDF is uploading please wait..");
-
+    //code for uploading pdf in database 
+    
     // Step 1: Get a short-lived upload
     const postUrl = await generateUploadUrl();
     // Step 2: POST the file to the URL

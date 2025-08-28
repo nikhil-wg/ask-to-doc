@@ -6,6 +6,7 @@ import { v } from "convex/values";
 
 const apiKey = process.env.GOOGLE_GEMINI_AI_API_KEY;
 
+
 if (!apiKey) {
   throw new Error(
     "❌ Missing GOOGLE_GEMINI_AI_API_KEY in environment variables."
