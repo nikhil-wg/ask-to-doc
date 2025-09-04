@@ -14,12 +14,15 @@ function Dashboard() {
     userEmail: user?.primaryEmailAddress?.emailAddress,
   });
   console.log("file list:", fileList);
+   const getUserInfo = useQuery(api.user.GetUserInfo, {
+      useEmail: user?.primaryEmailAddress?.emailAddress,
+    });
 
   return (
     <div>
       <div className="flex items-center justify-between">
         <h2 className="font-medium text-2xl">Dashboard</h2>
-        <UploadPdfDialog isMaxFile={fileList?.length >= 5 ? true : false}>
+        <UploadPdfDialog isMaxFile={(fileList?.length>= 5 && !getUserInfo?.upgrade) ? true : false}>
           <Button >+ Upload PDF</Button>
         </UploadPdfDialog>
       </div>

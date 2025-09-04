@@ -5,6 +5,8 @@ import { UserButton, useUser } from "@clerk/nextjs";
 import { useMutation } from "convex/react";
 import { useEffect } from "react";
 import { api } from "@/convex/_generated/api";
+import MainHeader from "./components/MainHeader.js";
+import Hero from "./components/Hero";
 
 export default function Home() {
   const { user } = useUser();
@@ -20,14 +22,15 @@ export default function Home() {
     });
     console.log(result);
   };
-  
+
   return (
-    <div className="p-10">
-      adfsdas
-      <Button >
-        theasdfdf
-      </Button>
-      <UserButton />
+    <div className="">
+      <div>
+
+   
+     <MainHeader/>
+      </div>
+      <Hero/>
     </div>
   );
 }

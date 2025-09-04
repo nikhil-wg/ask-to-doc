@@ -16,13 +16,13 @@ const outfit = Outfit({ subsets: ["latin"] });
 
 export default function RootLayout({ children }) {
   return (
-    <ClerkProvider>
-      <html lang="en">
-        <body className={outfit.className}>
+    <html lang="en" suppressHydrationWarning>
+      <body className={outfit.className}>
+        <ClerkProvider>
           <Provider>{children}</Provider>
           <Toaster />
-        </body>
-      </html>
-    </ClerkProvider>
+        </ClerkProvider>
+      </body>
+    </html>
   );
 }

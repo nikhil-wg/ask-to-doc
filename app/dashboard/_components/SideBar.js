@@ -14,6 +14,10 @@ import Link from "next/link";
 function SideBar() {
   const { user } = useUser();
   const path = usePathname();
+  const getUserInfo = useQuery(api.user.GetUserInfo, {
+    useEmail: user?.primaryEmailAddress?.emailAddress,
+  });
+  console.log(getUserInfo);
   const fileList = useQuery(api.fileStorage.GetUserFiles, {
     userEmail: user?.primaryEmailAddress?.emailAddress,
   });
@@ -28,7 +32,7 @@ function SideBar() {
         height={120}
       />
       <div className="mt-10">
-        <UploadPdfDialog isMaxFile={fileList?.length >= 5 ? true : false}>
+        <UploadPdfDialog isMaxFile={(fileList?.length>= 5 && !getUserInfo?.upgrade) ? true : false}>
           <Button className="w-full">+ Upload PDF</Button>
         </UploadPdfDialog>
         <Link href={"/dashboard"}>
@@ -47,7 +51,7 @@ function SideBar() {
             <h2>Upgrade</h2>
           </div>
         </Link>
-        <div className="absolute bottom-24 w-[80%]">
+        {!getUserInfo?.upgrade && <div className="absolute bottom-24 w-[80%]">
           <Progress value={(fileList?.length / 5) * 100} />
           <p className="text-sm mt-1">
             {" "}
@@ -57,7 +61,7 @@ function SideBar() {
             {" "}
             Upgrade to upload more PDF
           </p>
-        </div>
+        </div>}
       </div>
     </div>
   );

@@ -1,15 +1,30 @@
+"use client";
+import { api } from "@/convex/_generated/api";
+import { useUser } from "@clerk/nextjs";
+import { PayPalButtons } from "@paypal/react-paypal-js";
+import { useMutation } from "convex/react";
 import React from "react";
+import { toast } from "sonner";
 
 function UpgradePlan() {
+  const userUpgradePlan = useMutation(api.user.userUpgradePlan);
+  const {user}=useUser()
+  const onPaymentSuccess = async () => {
+    const result = await userUpgradePlan({ userEmail:user?.primaryEmailAddress?.emailAddress });
+    console.log("payment result",result)
+    toast("Plan Upgrade Successfully")
+  };
   return (
     <div>
       <div className="m-3">
         <h2 className="font-bold text-4xl pb-1">Plans</h2>
-        <p className='font-normal'>Update your plan to upload multitple pdf to ask questions</p>
+        <p className="font-normal">
+          Update your plan to upload multitple pdf to ask questions
+        </p>
       </div>
       <div className="mx-auto max-w-3xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:items-center md:gap-8">
-          <div className="rounded-2xl border border-indigo-600 p-6 shadow-xs ring-1 ring-indigo-600 sm:order-last sm:px-8 lg:p-12">
+          <div className="rounded-2xl border border-indigo-600 p-6 shadow-xs ring-1 ring-indigo-600 sm:order-last sm:px-8 lg:p-12 ">
             <div className="text-center">
               <h2 className="text-lg font-medium text-gray-900">
                 Pro
@@ -23,7 +38,7 @@ function UpgradePlan() {
                 </strong>
 
                 <span className="text-sm font-medium text-gray-700">
-                  /month
+                  /Life Time
                 </span>
               </p>
             </div>
@@ -144,12 +159,30 @@ function UpgradePlan() {
               </li> */}
             </ul>
 
-            <a
+            {/* <a
               href="#"
               className="mt-8 block rounded-full border border-indigo-600 bg-indigo-600 px-12 py-3 text-center text-sm font-medium text-white hover:bg-indigo-700 hover:ring-1 hover:ring-indigo-700 focus:ring-3 focus:outline-hidden"
             >
               Get Started
-            </a>
+            </a> */}
+            <div className="m-5 mt-4">
+              <PayPalButtons
+                onCancel={() => console.log("payment is cancel")}
+                onApprove={() => onPaymentSuccess()}
+                createOrder={(data, actions) => {
+                  return actions?.order?.create({
+                    purchase_units: [
+                      {
+                        amount: {
+                          value: 4.99,
+                          currency_code: "USD",
+                        },
+                      },
+                    ],
+                  });
+                }}
+              />
+            </div>
           </div>
 
           <div className="rounded-2xl border border-gray-200 p-6 shadow-xs sm:px-8 lg:p-12">
@@ -253,7 +286,7 @@ function UpgradePlan() {
               href="#"
               className="mt-8 block rounded-full border border-indigo-600 bg-white px-12 py-3 text-center text-sm font-medium text-indigo-600 hover:ring-1 hover:ring-indigo-600 focus:ring-3 focus:outline-hidden"
             >
-              Get Started
+              Current Package
             </a>
           </div>
         </div>
