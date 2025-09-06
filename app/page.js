@@ -7,6 +7,10 @@ import { useEffect } from "react";
 import { api } from "@/convex/_generated/api";
 import MainHeader from "./components/MainHeader.js";
 import Hero from "./components/Hero";
+import Features from "./components/Features.js";
+import HowToUse from "./components/HowToUse.js";
+import Reminder from "./components/Reminder.js";
+import Footer from "./components/Footer.js";
 
 export default function Home() {
   const { user } = useUser();
@@ -26,11 +30,23 @@ export default function Home() {
   return (
     <div className="">
       <div>
-
-   
-     <MainHeader/>
+        <MainHeader />
       </div>
-      <Hero/>
+      <div>
+        <Hero />
+      </div>
+      <div>
+        <Features/>
+      </div>
+      <div>
+        <HowToUse/>
+      </div>
+      <div>
+        <Reminder/>
+      </div>
+      <div>
+        <Footer/>
+      </div>
     </div>
   );
 }

@@ -10,8 +10,8 @@ const navItems = [
   { name: 'Home', href: '/' },
   { name: 'Features', href: '/features' },
   
-  { name: 'About', href: '/about' },
-  { name: 'Contact us', href: '/pricing' },
+  // { name: 'Contact us', href: '/pricing' },
+  { name: 'How to use', href: '/about' },
   { name: 'FAQ', href: '/pricing' },
 ];
 
@@ -79,10 +79,9 @@ export default function MainHeader() {
               href="/"
               className="flex items-center space-x-2"
             >
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-rose-500 to-rose-700">
-                <Sparkles className="h-5 w-5 text-white" />
-              </div>
-              <span className="bg-gradient-to-r from-rose-500 to-rose-700 bg-clip-text text-xl font-bold text-transparent">
+              {/* <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-rose-500 to-rose-700">
+              </div> */}
+              <span className="bg-gradient-to-r from-gray-600 to-gray-950 bg-clip-text text-xl font-bold text-transparent">
                 ASK To DOC
               </span>
             </Link>
@@ -149,7 +148,7 @@ export default function MainHeader() {
             <Link
               prefetch={false}
               href="/login"
-              className="text-foreground font-medium transition-colors duration-200 hover:text-rose-500"
+              className="text-foreground font-medium transition-colors duration-200 hover:text-gray-500"
             >
               Sign In
             </Link>
@@ -157,7 +156,7 @@ export default function MainHeader() {
               <Link
                 prefetch={false}
                 href="/signup"
-                className="inline-flex items-center space-x-2 rounded-full bg-gradient-to-r from-rose-500 to-rose-700 px-6 py-2.5 font-medium text-white transition-all duration-200 hover:shadow-lg"
+                className="inline-flex items-center space-x-2 rounded-full bg-gradient-to-r from-gray-700 to-gray-950 px-6 py-2.5 font-medium text-white transition-all duration-200 hover:shadow-lg"
               >
                 <span>Get Started</span>
                 <ArrowRight className="h-4 w-4" />
