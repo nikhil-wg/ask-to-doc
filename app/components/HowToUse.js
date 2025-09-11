@@ -10,7 +10,7 @@ const HowToUse = () => {
     show: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.3, // delay each child
+        staggerChildren: 0.3,
       },
     },
   };
@@ -30,20 +30,23 @@ const HowToUse = () => {
       variants={container}
     >
       <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
+        {/* Heading */}
         <motion.div
           className="max-w-2xl mx-auto text-center"
           variants={item}
         >
           <h2 className="text-3xl font-bold leading-tight text-black sm:text-4xl lg:text-5xl">
-            How does it work?
+            How does Ask to Doc work?
           </h2>
           <p className="max-w-lg mx-auto mt-4 text-base leading-relaxed text-gray-600">
-            Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet
-            sint. Velit officia consequat duis.
+            Get started in minutes — upload your documents and turn them into
+            smart conversations.
           </p>
         </motion.div>
 
+        {/* Steps */}
         <div className="relative mt-12 lg:mt-20">
+          {/* Dotted line illustration */}
           <div className="absolute inset-x-0 hidden xl:px-44 top-2 md:block md:px-20 lg:px-28">
             <img
               className="w-full"
@@ -62,11 +65,11 @@ const HowToUse = () => {
                 <span className="text-xl font-semibold text-gray-700">1</span>
               </div>
               <h3 className="mt-6 text-xl font-semibold leading-tight text-black md:mt-10">
-                Create a free account
+                Create your free account
               </h3>
               <p className="mt-4 text-base text-gray-600">
-                Amet minim mollit non deserunt ullamco est sit aliqua dolor do
-                amet sint. Velit officia consequat duis enim velit mollit.
+                Sign up securely with Clerk authentication to access your own
+                document space.
               </p>
             </motion.div>
 
@@ -76,11 +79,11 @@ const HowToUse = () => {
                 <span className="text-xl font-semibold text-gray-700">2</span>
               </div>
               <h3 className="mt-6 text-xl font-semibold leading-tight text-black md:mt-10">
-                Build your website
+                Upload your PDFs
               </h3>
               <p className="mt-4 text-base text-gray-600">
-                Amet minim mollit non deserunt ullamco est sit aliqua dolor do
-                amet sint. Velit officia consequat duis enim velit mollit.
+                Drag and drop your reports, research papers, or eBooks — AI
+                instantly prepares them for Q&A.
               </p>
             </motion.div>
 
@@ -90,11 +93,11 @@ const HowToUse = () => {
                 <span className="text-xl font-semibold text-gray-700">3</span>
               </div>
               <h3 className="mt-6 text-xl font-semibold leading-tight text-black md:mt-10">
-                Release & Launch
+                Chat with your documents
               </h3>
               <p className="mt-4 text-base text-gray-600">
-                Amet minim mollit non deserunt ullamco est sit aliqua dolor do
-                amet sint. Velit officia consequat duis enim velit mollit.
+                Ask any question and get instant, accurate answers without
+                scrolling through hundreds of pages.
               </p>
             </motion.div>
           </motion.div>

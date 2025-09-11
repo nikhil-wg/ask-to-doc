@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { motion } from "framer-motion";
-import { FileText, Stethoscope, MessageCircle } from "lucide-react";
+import { Upload, MessageSquare, Brain } from "lucide-react";
 
 const Features = () => {
   const cardVariants = {
@@ -15,27 +15,27 @@ const Features = () => {
 
   const features = [
     {
-      icon: <FileText className="w-8 h-8 text-gray-700" />,
-      title: "Smart Document Upload",
+      icon: <Upload className="w-8 h-8 text-gray-700" />,
+      title: "Effortless PDF Upload",
       description:
-        "Upload medical reports, prescriptions, and scans securely. AI organizes and extracts key insights instantly.",
+        "Simply drag and drop your documents. Our AI prepares them instantly for interactive Q&A.",
     },
     {
-      icon: <Stethoscope className="w-8 h-8 text-gray-700" />,
-      title: "AI-Powered Doctor Assistance",
+      icon: <Brain className="w-8 h-8 text-gray-700" />,
+      title: "AI-Powered Insights",
       description:
-        "Get preliminary guidance and answers to health-related queries before consulting a real doctor.",
+        "No more scrolling through endless pages. Ask questions and get precise, context-aware answers in seconds.",
     },
     {
-      icon: <MessageCircle className="w-8 h-8 text-gray-700" />,
-      title: "Seamless Doctor Chat",
+      icon: <MessageSquare className="w-8 h-8 text-gray-700" />,
+      title: "Chat with Your Files",
       description:
-        "Connect with verified doctors, ask questions in real-time, and receive personalized recommendations.",
+        "Turn your PDFs into conversations. Engage with your documents like chatting with an expert assistant.",
     },
   ];
 
   return (
-    <section className="py-16 bg-white">
+    <section className="py-16 bg-gray-50">
       <div className="px-4 mx-auto max-w-6xl sm:px-6 lg:px-8">
         {/* Heading */}
         <div className="text-center">
@@ -45,10 +45,10 @@ const Features = () => {
             transition={{ duration: 0.6 }}
             className="text-3xl font-bold text-gray-900 sm:text-4xl"
           >
-            Why Choose AskMyDoc?
+            Why Choose Ask to Doc?
           </motion.h2>
           <p className="mt-4 text-lg text-gray-600">
-            Designed to simplify healthcare with AI and real doctors at your side.
+            Built to transform static documents into smart, interactive knowledge.
           </p>
         </div>
 

@@ -15,7 +15,7 @@ const Reminder = () => {
             transition={{ duration: 0.6, ease: "easeOut" }}
             className="text-3xl font-bold leading-tight text-black sm:text-4xl lg:text-5xl"
           >
-            Get full access to Celebration
+            Get full access to <span className="text-blue-600">Ask-to-Doc</span>
           </motion.h2>
 
           {/* Subheading */}
@@ -23,9 +23,9 @@ const Reminder = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.3, duration: 0.6 }}
-            className="mt-4 text-2xl font-medium"
+            className="mt-4 text-2xl font-medium text-gray-700"
           >
-            130+ Hand Crafted Coded Blocks
+            Upload your PDFs. Ask questions. Get instant answers.
           </motion.p>
 
           {/* Buttons */}
@@ -37,7 +37,7 @@ const Reminder = () => {
           >
             <a
               href="#"
-              title=""
+              title="Try for Free"
               className="inline-flex items-center justify-center w-full px-8 py-4 text-base font-semibold text-white transition-all duration-200 bg-blue-600 border border-transparent rounded-md sm:w-auto hover:bg-blue-700 focus:bg-blue-700"
               role="button"
             >
@@ -46,7 +46,7 @@ const Reminder = () => {
 
             <a
               href="#"
-              title=""
+              title="Contact Sales"
               className="inline-flex items-center justify-center w-full px-8 py-4 text-base font-semibold text-black transition-all duration-200 bg-transparent border border-black rounded-md sm:w-auto hover:bg-black hover:text-white focus:bg-black focus:text-white"
               role="button"
             >
@@ -78,7 +78,7 @@ const Reminder = () => {
             Already have an account?{" "}
             <a
               href="#"
-              title=""
+              title="Log in"
               className="text-blue-600 transition-all duration-200 hover:text-blue-700 focus:text-blue-700 hover:underline"
             >
               Log in

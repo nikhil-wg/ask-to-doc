@@ -120,6 +120,9 @@
     @apply bg-background text-foreground;
   }
 }
+html {
+  scroll-behavior: smooth;
+}
 
 /* Basic editor styles */
 .tiptap {

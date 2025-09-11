@@ -1,52 +1,58 @@
 "use client";
-import Image from "next/image";
-import { Button } from "@/components/ui/button";
-import { UserButton, useUser } from "@clerk/nextjs";
-import { useMutation } from "convex/react";
 import { useEffect } from "react";
+import { useUser } from "@clerk/nextjs";
+import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
-import MainHeader from "./components/MainHeader.js";
+
+import MainHeader from "./components/MainHeader";
 import Hero from "./components/Hero";
-import Features from "./components/Features.js";
-import HowToUse from "./components/HowToUse.js";
-import Reminder from "./components/Reminder.js";
-import Footer from "./components/Footer.js";
+import Features from "./components/Features";
+import HowToUse from "./components/HowToUse";
+import Reminder from "./components/Reminder";
+import Faq from "./components/FAQ";
+import Footer from "./components/Footer";
 
 export default function Home() {
   const { user } = useUser();
   const createUser = useMutation(api.user.createUser);
+
   useEffect(() => {
-    user && CheckUser();
-  }, [user]);
-  const CheckUser = async () => {
-    const result = await createUser({
-      email: user?.primaryEmailAddress.emailAddress,
-      imgURL: user?.imageUrl,
-      userName: user?.fullName,
-    });
-    console.log(result);
-  };
+    if (user) {
+      createUser({
+        email: user?.primaryEmailAddress.emailAddress,
+        imgURL: user?.imageUrl,
+        userName: user?.fullName,
+      }).then((res) => console.log(res));
+    }
+  }, [user, createUser]);
 
   return (
-    <div className="">
-      <div>
-        <MainHeader />
-      </div>
-      <div>
+    <div className="bg-gray-50">
+      <MainHeader />
+
+      <section id="home">
         <Hero />
-      </div>
-      <div>
-        <Features/>
-      </div>
-      <div>
-        <HowToUse/>
-      </div>
-      <div>
-        <Reminder/>
-      </div>
-      <div>
-        <Footer/>
-      </div>
+      </section>
+
+      <section id="features">
+        <Features />
+      </section>
+
+      <section id="howtouse">
+        <HowToUse />
+      </section>
+
+
+      <section id="faq">
+        <Faq />
+      </section>
+
+      <section id="reminder">
+        <Reminder />
+      </section>
+      <section>
+        <Footer />
+      </section>
     </div>
   );
 }
