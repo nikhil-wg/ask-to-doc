@@ -1,13 +1,23 @@
 "use client";
 import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { X } from "lucide-react";
+import { motion } from "framer-motion";
 
 function Hero() {
-  const [isDemoOpen, setIsDemoOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+
+  const openModal = () => setIsOpen(true);
+  const closeModal = () => setIsOpen(false);
 
   return (
     <div className="overflow-x-hidden bg-gray-50">
+      <header className="py-4 md:py-6">
+        <div className="container px-4 mx-auto sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between">
+            <div className="flex lg:hidden"></div>
+          </div>
+        </div>
+      </header>
+
       {/* Hero Section */}
       <section className="pt-12 bg-gray-50 sm:pt-16">
         <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
@@ -17,7 +27,6 @@ function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            {/* Small tagline */}
             <motion.h1
               className="px-4 text-base sm:text-lg text-gray-600"
               initial={{ opacity: 0 }}
@@ -27,7 +36,6 @@ function Hero() {
               AI-powered document assistant, built for productivity
             </motion.h1>
 
-            {/* Main headline */}
             <motion.p
               className="mt-5 text-3xl font-bold leading-tight text-gray-900 sm:text-4xl lg:text-5xl xl:text-6xl"
               initial={{ opacity: 0, scale: 0.95 }}
@@ -41,21 +49,19 @@ function Hero() {
               </span>
             </motion.p>
 
-            {/* CTA Buttons */}
             <motion.div
               className="px-4 sm:px-0 mt-9 mb-10 flex flex-col sm:flex-row items-center justify-center gap-4"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6, duration: 0.5 }}
             >
-              <a
-                href="/dashboard"
-                className="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 text-base sm:text-lg font-bold text-white bg-gray-900 rounded-xl hover:bg-gray-700 transition"
-              >
-                Upload your first PDF
+              <a href="/dashboard">
+                <button className="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 text-base sm:text-lg font-bold text-white bg-gray-900 rounded-xl hover:bg-gray-700 transition">
+                  Upload your first PDF
+                </button>
               </a>
               <button
-                onClick={() => setIsDemoOpen(true)}
+                onClick={openModal}
                 className="w-full sm:w-auto inline-flex items-center justify-center px-6 py-3 text-base sm:text-lg font-bold text-gray-900 border-2 border-gray-400 rounded-xl hover:bg-gray-900 hover:text-white transition"
               >
                 <svg
@@ -78,7 +84,7 @@ function Hero() {
           </motion.div>
         </div>
 
-        {/* Hero Illustration (clickable) */}
+        {/* Hero Illustration */}
         <motion.div
           className="pb-12 bg-gray-50"
           initial={{ opacity: 0, y: 50 }}
@@ -88,8 +94,8 @@ function Hero() {
           <div className="relative">
             <div className="absolute inset-0 h-2/3 bg-gray-50"></div>
             <div
-              className="mb-10 relative mx-auto max-w-xs sm:max-w-lg md:max-w-3xl lg:max-w-5xl cursor-pointer"
-              onClick={() => setIsDemoOpen(true)}
+              onClick={openModal}
+              className="cursor-pointer mb-10 relative mx-auto max-w-xs sm:max-w-lg md:max-w-3xl lg:max-w-5xl"
             >
               <span className="absolute inset-0 rounded-3xl bg-gradient-to-r from-[#44BCFF] via-[#FF44EC] to-[#FF675E] blur-3xl opacity-30"></span>
               <img
@@ -102,45 +108,33 @@ function Hero() {
         </motion.div>
       </section>
 
-      {/* Modal for Demo Video */}
-      <AnimatePresence>
-        {isDemoOpen && (
-          <motion.div
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-          >
-            <motion.div
-              className="relative w-[90%] max-w-3xl bg-white rounded-2xl overflow-hidden shadow-2xl"
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              transition={{ duration: 0.3 }}
-            >
-              {/* Close Button */}
-              <button
-                className="absolute top-4 right-4 p-2 rounded-full bg-black/70 text-white hover:bg-black"
-                onClick={() => setIsDemoOpen(false)}
-              >
-                <X className="h-5 w-5" />
-              </button>
+      {/* Modal */}
 
-              {/* Local Video */}
-              <div className="aspect-video w-full bg-black">
-                <video
-                  className="w-full h-full"
-                  controls
-                  autoPlay
-                >
-                  <source src="/demo.mp4" type="video/mp4" />
-                  Your browser does not support the video tag.
-                </video>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {isOpen && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-transparent backdrop-blur-sm"
+          onClick={closeModal}
+        >
+          {/* Stop click from bubbling out of video box */}
+          <div
+            className="relative w-11/12 max-w-3xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <video
+              src="/demo.mp4"
+              controls
+              autoPlay
+              className="rounded-lg w-full h-auto shadow-2xl"
+            />
+            <button
+              onClick={closeModal}
+              className="absolute -top-4 -right-4 bg-white rounded-full p-2 shadow-lg"
+            >
+              ✕
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
