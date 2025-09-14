@@ -17,24 +17,18 @@ Upload, ask, and get insights from your documents — in seconds.
 
 ## Demo
 
-https://github.com/your-username/your-repo/assets/demo-video.mp4  
+https://github.com/nikhil-wg/ask-to-doc/blob/main/public/demo.mp4
 
 *(Click the video to play — hosted in GitHub repo or any public URL)*  
 
 ---
 
-## 📸 Preview
-
-![Ask To Doc Dashboard](./public/imgDash.png)
-
----
-
 ## 🛠️ Tech Stack
 
-- **Frontend**: Next.js, React, TailwindCSS, Framer Motion  
+- **Frontend**: Next.js,Langchain, TailwindCSS, Framer Motion  
 - **Auth**: Clerk  
-- **Backend**: Node.js, Express.js  
-- **Database**: MongoDB / Firebase (depending on setup)  
+- **Backend**: Node.js,  
+- **Database**: Convex db
 - **Deployment**: Vercel  
 
 ---
