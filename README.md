@@ -17,9 +17,7 @@ Upload, ask, and get insights from your documents — in seconds.
 
 ## Demo
 
-https://github.com/nikhil-wg/ask-to-doc/blob/main/public/demo.mp4
-
-*(Click the video to play — hosted in GitHub repo or any public URL)*  
+<video src="https://github.com/user-attachments/assets/d8888497-00fb-4392-b88a-a88552dd7415" controls width="600"></video>
 
 ---
 
