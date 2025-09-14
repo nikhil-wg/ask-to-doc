@@ -36,6 +36,6 @@ Upload, ask, and get insights from your documents — in seconds.
 Clone the repo and install dependencies:
 
 ```bash
-git clone https://github.com/your-username/ask-to-doc.git
+git clone https://github.com/nikhil-wg/ask-to-doc.git
 cd ask-to-doc
 npm install
